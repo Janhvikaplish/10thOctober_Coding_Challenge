@@ -1,0 +1,38 @@
+// find the Kth smallest element in the given array
+
+class Solution{
+    public static int kthSmallest(int[] arr, int l, int r, int k) 
+    { 
+      
+            int pi=partition(arr,l,r);
+            
+            if(k-1<pi)
+            return kthSmallest(arr, l, pi-1,k);
+            
+            else if(k-1>pi)
+            return kthSmallest(arr, pi+1, r, k);
+            
+            else
+            return arr[pi];
+      
+    } 
+    static int partition(int[] arr, int lo, int hi)
+    {
+        int i=lo, pivot=hi, j=lo;
+        while(j<=hi)
+        {
+            if(arr[j]<=arr[pivot])
+            {
+                int temp=arr[i];
+                arr[i]=arr[j];
+                arr[j]=temp;
+                i++;
+                j++;
+            }
+            else
+            j++;
+        }
+        
+        return i-1;
+    }
+}
