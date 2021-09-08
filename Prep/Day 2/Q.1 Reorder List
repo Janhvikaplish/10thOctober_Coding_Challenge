@@ -1,0 +1,68 @@
+/*
+Reorder List
+
+Given a singly linked list
+
+    L: L0 → L1 → … → Ln-1 → Ln,
+reorder it to:
+
+    L0 → Ln → L1 → Ln-1 → L2 → Ln-2 → …
+You must do this in-place without altering the nodes’ values.
+For example,
+Given {1,2,3,4}, reorder it to {1,4,2,3}.
+*/
+
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     ListNode(int x) { val = x; next = null; }
+ * }
+ */
+public class Solution {
+    public ListNode reorderList(ListNode n) {
+        if(n == null || n.next == null || n.next.next == null) {
+            return n;
+        }
+        ListNode middle = getMiddleNode(n);
+        ListNode temp2 = reverseList(middle.next);
+        middle.next = null;
+        ListNode temp1 = n;
+        while(temp1 != null && temp2 != null) {
+            ListNode temp3 = temp2;
+            temp2 = temp2.next;
+            temp3.next = temp1.next;
+            temp1.next = temp3;
+            temp1 = temp3.next;
+        }
+        return n;
+    }
+    
+    private ListNode reverseList(ListNode n) {
+        if(n == null) return null;
+        ListNode pre = null;
+        ListNode cur = n;
+        ListNode nextn = null;
+        while(cur != null) {
+            nextn = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = nextn;
+        }
+        return pre;
+    }
+    
+    private ListNode getMiddleNode(ListNode n) {
+        if(n == null) return null;
+        ListNode slow = n;
+        ListNode fast = n.next;
+        while(fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next;
+            if(fast != null)
+                fast = fast.next;
+        }
+        return slow;
+    }
+}
