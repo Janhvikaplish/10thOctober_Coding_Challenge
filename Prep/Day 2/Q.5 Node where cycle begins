@@ -1,0 +1,61 @@
+/*
+List Cycle
+Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
+Try solving it using constant additional space.
+Example:
+Input: 
+              ______
+             |     |
+             \/    |
+    1 -> 2 -> 3 -> 4
+Return the node corresponding to node 3. 
+*/
+
+
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     ListNode(int x) { val = x; next = null; }
+ * }
+ */
+public class Solution {
+	public ListNode detectCycle(ListNode a) {
+        ListNode slowRunner = a;
+        ListNode fastRunner = a;
+     
+        
+        if(a == null)
+        {
+            return null;
+        }
+        
+        int loopLength = 0;
+        while(fastRunner.next != null && fastRunner.next.next != null)
+        {
+            slowRunner = slowRunner.next;
+            fastRunner = fastRunner.next.next;
+            
+            if(slowRunner == fastRunner)
+            {
+                // loop found.
+                
+
+                slowRunner = a;
+                while(true)
+                {
+                    if(slowRunner == fastRunner)
+                    {
+                        return slowRunner;
+                    }
+                    
+                    slowRunner = slowRunner.next;
+                    fastRunner = fastRunner.next;
+                }
+            }
+        }
+        
+        return null;
+	}
+}
