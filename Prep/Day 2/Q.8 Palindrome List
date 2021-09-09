@@ -1,0 +1,85 @@
+/*
+Palindrome List
+
+Given a singly linked list, determine if its a palindrome. Return 1 or 0 denoting if its a palindrome or not, respectively.
+Notes:
+Expected solution is linear in time and constant in space.
+For example,
+List 1-->2-->1 is a palindrome.
+List 1-->2-->3 is not a palindrome.
+*/
+
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     ListNode(int x) { val = x; next = null; }
+ * }
+ */
+public class Solution {
+     public int lPalin(ListNode A) 
+    {
+        int result=0;
+        int i;
+        ListNode dup=A;
+        int len=0;
+        while(dup!=null)
+        {
+            len++;
+            dup=dup.next;
+        }
+        if(len==0 || len==1)
+        {
+            result=1;
+            return result;
+        }
+        dup=A;
+        ListNode left=null;
+        ListNode right=null;
+        if(len%2==0)
+        {
+           for(i=1;i<(len/2);i++)
+           dup=dup.next;
+           right=dup.next;
+           dup.next=null;
+           left=reverse(A);
+        }
+        else
+        {
+            for(i=0;i<(len/2)-1;i++)
+            dup=dup.next;
+            right=dup.next.next;
+            dup.next=null;
+            left=reverse(A);
+        }
+        while(left!=null)
+        {
+            if(left.val!=right.val)
+            {
+                result=0;
+                break;
+            }
+        left=left.next;
+        right=right.next;
+        result=1;
+        }
+        return result;
+   }
+  
+  ListNode reverse(ListNode x)
+  {
+      ListNode node,prev,ans;
+      prev=null;
+      ans=null;
+      node=x;
+      while(node!=null)
+      {
+          ans=node.next;
+          node.next=prev;
+          prev=node;
+          node=ans;
+      }
+      return prev;
+  }
+}
