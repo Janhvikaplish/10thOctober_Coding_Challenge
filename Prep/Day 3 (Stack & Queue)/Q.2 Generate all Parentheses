@@ -1,0 +1,37 @@
+/*
+Generate all Parentheses
+
+Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.
+Return 0 / 1 ( 0 for false, 1 for true ) for this problem
+*/
+
+public class Solution {
+    public int isValid(String A) {
+        
+        Stack<Character> s= new Stack<>();
+        for(char c : A.toCharArray()){
+            boolean flag = false;
+            
+            if(c==')'||c=='}'||c==']'){
+                if(s.isEmpty()) 
+                return 0;
+                if(c==')' && s.peek()=='(')
+                flag=true;
+                if(c=='}' && s.peek()=='{')
+                flag=true;
+                if(c==']' && s.peek()=='[')
+                flag=true;
+
+                if(flag==false)
+                return 0;
+                s.pop();
+            
+            }
+            else
+            s.push(c);
+        }
+        return s.isEmpty()?1:0;
+        
+    }
+}
